@@ -1,6 +1,6 @@
 {
-  "appname": "XXXXX",
-  "ocscope": "BuyerReader",
-  "clientid": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXX",
-  "buyerid": "XXXXX"
+  "appname": "Echidna Testing",
+  "ocscope": "FullAccess",
+  "clientid": "E06A5680-592F-4CE0-B0AC-353025687FDC",
+  "buyerid": "23"
 }
