@@ -28,64 +28,16 @@ function BaseConfig( $stateProvider ) {
                     controller: 'BaseLeftCtrl',
                     controllerAs: 'baseLeft'
                 }
-            },
-            resolve: {
-                CurrentUser: function($q, $state, OrderCloud) {
-                    var dfd = $q.defer();
-                    OrderCloud.Me.Get()
-                        .then(function(data) {
-                            dfd.resolve(data);
-                        })
-                        .catch(function(){
-                            OrderCloud.Auth.RemoveToken();
-                            OrderCloud.Auth.RemoveImpersonationToken();
-                            OrderCloud.BuyerID.Set(null);
-                            $state.go('login');
-                            dfd.resolve();
-                        });
-                    return dfd.promise;
-                },
-                ComponentList: function($state, $q, Underscore, CurrentUser) {
-                    var deferred = $q.defer();
-                    var nonSpecific = ['Products', 'Specs', 'Price Schedules', 'Admin Users'];
-                    var components = {
-                        nonSpecific: [],
-                        buyerSpecific: []
-                    };
-                    angular.forEach($state.get(), function(state) {
-                        if (!state.data || !state.data.componentName) return;
-                        if (nonSpecific.indexOf(state.data.componentName) > -1) {
-                            if (Underscore.findWhere(components.nonSpecific, {Display: state.data.componentName}) == undefined) {
-                                components.nonSpecific.push({
-                                    Display: state.data.componentName,
-                                    StateRef: state.name
-                                });
-                            }
-                        } else {
-                            if (Underscore.findWhere(components.buyerSpecific, {Display: state.data.componentName}) == undefined) {
-                                components.buyerSpecific.push({
-                                    Display: state.data.componentName,
-                                    StateRef: state.name
-                                });
-                            }
-                        }
-                    });
-                    deferred.resolve(components);
-                    return deferred.promise;
-                }
             }
         });
 }
 
-function BaseController(CurrentUser) {
+function BaseController() {
     var vm = this;
-    vm.currentUser = CurrentUser;
 }
 
-function BaseLeftController(ComponentList) {
+function BaseLeftController() {
     var vm = this;
-    vm.catalogItems = ComponentList.nonSpecific;
-    vm.organizationItems = ComponentList.buyerSpecific;
 }
 
 function BaseTopController() {

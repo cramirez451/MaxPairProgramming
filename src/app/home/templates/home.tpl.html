@@ -1,6 +1,28 @@
-<div class="container-fluid">
-	<header class="jumbotron text-center">
-		<h2 ng-bind="application.name"></h2>
+<div class="container">
+	<header class="jumbotron">
+		<fieldset class="form-group">
+			<label for="nextopiasearch">Search</label>
+			<div class="input-group">
+				<input id="nextopiasearch" type="text" ng-model="home.searchterm" class="form-control" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" ng-click="home.search()">
+						Search
+					</button>
+				</span>
+			</div>
+		</fieldset>
+		<div class="row" ng-repeat="(refinable, vals) in home.refinables">
+			<fieldset class="form-group"  class="col-sm-6">
+				<label>{{refinable}}</label>
+				<select class="form-control" ng-model="home.refineQuery[refinable]" ng-options="key as key for (key, val) in vals.values" ng-change="home.searchWithRefinables()"></select>
+			</fieldset>
+		</div>
+
 	</header>
+	<div ng-show="home.searchReturn.results.length">
+		<div class="well well-lg" ng-repeat="product in home.searchReturn.results">
+			{{product | json}}
+		</div>
+	</div>
 </div>
 

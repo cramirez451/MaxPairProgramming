@@ -18,10 +18,11 @@ angular.module( 'orderCloud', [
         'ordercloud-auto-id',
         'ordercloud-current-order',
         'ordercloud-address',
-        'ordercloud-lineitems'
+        'ordercloud-lineitems',
+        'nextopia-ng-sdk'
     ])
 
-    .run( SetBuyerID )
+    .run( SetBuyerID)
     .config( Routing )
     .config( ErrorHandling )
     .config( Interceptor )
@@ -31,6 +32,7 @@ angular.module( 'orderCloud', [
 function SetBuyerID( OrderCloud, buyerid ) {
     OrderCloud.BuyerID.Get() ? angular.noop() : OrderCloud.BuyerID.Set(buyerid);
 }
+
 
 function Routing( $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider ) {
     $urlMatcherFactoryProvider.strictMode(false);
